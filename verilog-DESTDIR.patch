@@ -1,0 +1,414 @@
+--- verilog-0.8.1/Makefile.in.orig	2006-03-02 15:36:12.000000000 +0100
++++ verilog-0.8.1/Makefile.in	2006-03-02 15:38:06.000000000 +0100
+@@ -216,38 +216,37 @@
+ 	    do (cd $$dir ; $(MAKE) $@); done
+ 
+ $(bindir)/iverilog-vpi: ./iverilog-vpi
+-	$(INSTALL_SCRIPT) ./iverilog-vpi $(bindir)/iverilog-vpi
++	$(INSTALL_SCRIPT) ./iverilog-vpi $(DESTDIR)$(bindir)/iverilog-vpi
+ 
+ $(libdir)/ivl/ivl@EXEEXT@: ./ivl@EXEEXT@
+-	$(INSTALL_PROGRAM) ./ivl@EXEEXT@ $(libdir)/ivl/ivl@EXEEXT@
+-	$(STRIP) $(strip_dynamic) $(libdir)/ivl/ivl@EXEEXT@
++	$(INSTALL_PROGRAM) ./ivl@EXEEXT@ $(DESTDIR)$(libdir)/ivl/ivl@EXEEXT@
+ 
+ $(libdir)/ivl/xnf-s.conf: $(srcdir)/xnf-s.conf
+-	$(INSTALL_DATA) $(srcdir)/xnf-s.conf $(libdir)/ivl/xnf-s.conf
++	$(INSTALL_DATA) $(srcdir)/xnf-s.conf $(DESTDIR)$(libdir)/ivl/xnf-s.conf
+ 
+ $(libdir)/ivl/xnf.conf: $(srcdir)/xnf.conf
+-	$(INSTALL_DATA) $(srcdir)/xnf.conf $(libdir)/ivl/xnf.conf
++	$(INSTALL_DATA) $(srcdir)/xnf.conf $(DESTDIR)$(libdir)/ivl/xnf.conf
+ 
+ $(includedir)/ivl_target.h: $(srcdir)/ivl_target.h
+-	$(INSTALL_DATA) $(srcdir)/ivl_target.h $(includedir)/ivl_target.h
++	$(INSTALL_DATA) $(srcdir)/ivl_target.h $(DESTDIR)$(includedir)/ivl_target.h
+ 
+ $(includedir)/_pli_types.h: _pli_types.h
+-	$(INSTALL_DATA) $< $(includedir)/_pli_types.h
++	$(INSTALL_DATA) $< $(DESTDIR)$(includedir)/_pli_types.h
+ 
+ $(includedir)/vpi_user.h: $(srcdir)/vpi_user.h
+-	$(INSTALL_DATA) $(srcdir)/vpi_user.h $(includedir)/vpi_user.h
++	$(INSTALL_DATA) $(srcdir)/vpi_user.h $(DESTDIR)$(includedir)/vpi_user.h
+ 
+ $(includedir)/acc_user.h: $(srcdir)/acc_user.h
+-	$(INSTALL_DATA) $(srcdir)/acc_user.h $(includedir)/acc_user.h
++	$(INSTALL_DATA) $(srcdir)/acc_user.h $(DESTDIR)$(includedir)/acc_user.h
+ 
+ $(includedir)/veriuser.h: $(srcdir)/veriuser.h
+-	$(INSTALL_DATA) $(srcdir)/veriuser.h $(includedir)/veriuser.h
++	$(INSTALL_DATA) $(srcdir)/veriuser.h $(DESTDIR)$(includedir)/veriuser.h
+ 
+ $(mandir)/man1/iverilog-vpi.1: $(srcdir)/iverilog-vpi.man
+-	$(INSTALL_DATA) $(srcdir)/iverilog-vpi.man $(mandir)/man1/iverilog-vpi.1
++	$(INSTALL_DATA) $(srcdir)/iverilog-vpi.man $(DESTDIR)$(mandir)/man1/iverilog-vpi.1
+ 
+ $(prefix)/iverilog-vpi.pdf: iverilog-vpi.pdf
+-	$(INSTALL_DATA) iverilog-vpi.pdf $(prefix)/iverilog-vpi.pdf
++	$(INSTALL_DATA) iverilog-vpi.pdf $(DESTDIR)$(prefix)/iverilog-vpi.pdf
+ 
+ # In windows installations, put a few examples and the quick_start
+ # into the destination directory.
+@@ -270,8 +269,8 @@
+ endif
+ 
+ installdirs: mkinstalldirs
+-	$(srcdir)/mkinstalldirs $(bindir) $(includedir) $(libdir)/ivl \
+-	    $(mandir) $(mandir)/man1
++	$(srcdir)/mkinstalldirs $(DESTDIR)$(bindir) $(DESTDIR)$(includedir) $(DESTDIR)$(libdir)/ivl \
++	    $(DESTDIR)$(mandir) $(DESTDIR)$(mandir)/man1
+ 
+ uninstall:
+ 	for dir in $(SUBDIRS); do (cd $$dir ; $(MAKE) $@); done
+--- verilog-0.8.1/vpi/Makefile.in.orig	2006-03-02 15:46:26.000000000 +0100
++++ verilog-0.8.1/vpi/Makefile.in	2006-03-02 15:54:25.000000000 +0100
+@@ -100,8 +100,7 @@
+ install32: all32 $(vpidir32)/system.vpi
+ 
+ $(vpidir32)/system.vpi: bin32/system.vpi
+-	$(INSTALL_PROGRAM) bin32/system.vpi $(vpidir32)/system.vpi
+-	$(STRIP) $(strip_dynamic) $(vpidir32)/system.vpi
++	$(INSTALL_PROGRAM) bin32/system.vpi $(DESTDIR)$(vpidir32)/system.vpi
+ 
+ uninstall32:
+ 	rm -f $(vpidir32)/system.vpi
+@@ -116,14 +115,13 @@
+ install: all installdirs $(vpidir)/system.vpi $(libdir)/ivl/system.sft $(INSTALL32)
+ 
+ $(vpidir)/system.vpi: ./system.vpi
+-	$(INSTALL_PROGRAM) ./system.vpi $(vpidir)/system.vpi
+-	$(STRIP) $(strip_dynamic) $(vpidir)/system.vpi
++	$(INSTALL_PROGRAM) ./system.vpi $(DESTDIR)$(vpidir)/system.vpi
+ 
+ $(libdir)/ivl/system.sft: system.sft
+-	$(INSTALL_DATA) $< $@
++	$(INSTALL_DATA) $< $(DESTDIR)$@
+ 
+ installdirs: ../mkinstalldirs
+-	$(srcdir)/../mkinstalldirs $(vpidir)
++	$(srcdir)/../mkinstalldirs $(DESTDIR)$(vpidir)
+ 
+ uninstall: $(UNINSTALL32)
+ 	rm -f $(vpidir)/system.vpi
+--- verilog-0.8.1/vvp/Makefile.in.orig	2006-03-02 15:55:00.000000000 +0100
++++ verilog-0.8.1/vvp/Makefile.in	2006-03-02 15:55:37.000000000 +0100
+@@ -184,29 +184,29 @@
+ install: all installdirs $(bindir)/vvp@EXEEXT@ $(libdir64)/libvpi.a $(INSTALL_DOC) $(INSTALL32)
+ 
+ $(bindir)/vvp@EXEEXT@: ./vvp@EXEEXT@
+-	$(INSTALL_PROGRAM) ./vvp@EXEEXT@ $(bindir)/vvp@EXEEXT@
++	$(INSTALL_PROGRAM) ./vvp@EXEEXT@ $(DESTDIR)$(bindir)/vvp@EXEEXT@
+ 
+ $(libdir64)/libvpi.a : ./libvpi.a
+-	$(INSTALL_DATA) libvpi.a $(libdir64)/libvpi.a
++	$(INSTALL_DATA) libvpi.a $(DESTDIR)$(libdir64)/libvpi.a
+ 
+ $(mandir)/man1/vvp.1: $(srcdir)/vvp.man
+-	$(INSTALL_DATA) $(srcdir)/vvp.man $(mandir)/man1/vvp.1
++	$(INSTALL_DATA) $(srcdir)/vvp.man $(DESTDIR)$(mandir)/man1/vvp.1
+ 
+ $(prefix)/vvp.pdf: vvp.pdf
+-	$(INSTALL_DATA) vvp.pdf $(prefix)/vvp.pdf
++	$(INSTALL_DATA) vvp.pdf $(DESTDIR)$(prefix)/vvp.pdf
+ 
+ installdirs: $(srcdir)/mkinstalldirs
+-	$(srcdir)/mkinstalldirs $(bindir) $(libdir) $(libdir64) $(INSTALL_DOCDIR)
++	$(srcdir)/mkinstalldirs $(DESTDIR)$(bindir) $(DESTDIR)$(libdir) $(DESTDIR)$(libdir64) $(DESTDIR)$(INSTALL_DOCDIR)
+ 
+ 
+ ifeq (@enable_vvp32@,yes)
+ install32: all32 $(libdir)/libvpi.a $(bindir)/vvp32
+ 
+ $(libdir)/libvpi.a: bin32/libvpi.a
+-	$(INSTALL_DATA) bin32/libvpi.a $(libdir)/libvpi.a
++	$(INSTALL_DATA) bin32/libvpi.a $(DESTDIR)$(libdir)/libvpi.a
+ 
+ $(bindir)/vvp32: ./vvp32
+-	$(INSTALL_PROGRAM) ./vvp32 $(bindir)/vvp32
++	$(INSTALL_PROGRAM) ./vvp32 $(DESTDIR)$(bindir)/vvp32
+ 
+ uninstall32:
+ 	rm -f $(libdir)/libvpi.a
+--- verilog-0.8.1/tgt-verilog/Makefile.in.orig	2006-03-02 15:45:43.000000000 +0100
++++ verilog-0.8.1/tgt-verilog/Makefile.in	2006-03-02 15:45:56.000000000 +0100
+@@ -74,11 +74,11 @@
+ 	$(includedir)/vpi_user.h
+ 
+ $(libdir)/ivl/verilog.tgt: ./verilog.tgt
+-	$(INSTALL_PROGRAM) ./verilog.tgt $(libdir)/ivl/verilog.tgt
++	$(INSTALL_PROGRAM) ./verilog.tgt $(DESTDIR)$(libdir)/ivl/verilog.tgt
+ 
+ 
+ installdirs: ../mkinstalldirs
+-	$(srcdir)/../mkinstalldirs $(libdir)/ivl
++	$(srcdir)/../mkinstalldirs $(DESTDIR)$(libdir)/ivl
+ 
+ uninstall:
+ 	rm -f $(libdir)/ivl/verilog.tgt
+--- verilog-0.8.1/vpip/Makefile.in.orig	2006-03-02 15:54:36.000000000 +0100
++++ verilog-0.8.1/vpip/Makefile.in	2006-03-02 15:54:53.000000000 +0100
+@@ -86,13 +86,13 @@
+ 	$(includedir)/vpi_priv.h
+ 
+ $(libdir)/libvpip.a: ./libvpip.a
+-	$(INSTALL_DATA) ./libvpip.a $(libdir)/libvpip.a
++	$(INSTALL_DATA) ./libvpip.a $(DESTDIR)$(libdir)/libvpip.a
+ 
+ $(includedir)/vpi_priv.h: $(srcdir)/vpi_priv.h
+-	$(INSTALL_DATA) $(srcdir)/vpi_priv.h $(includedir)/vpi_priv.h
++	$(INSTALL_DATA) $(srcdir)/vpi_priv.h $(DESTDIR)$(includedir)/vpi_priv.h
+ 
+ installdirs: mkinstalldirs
+-	$(srcdir)/mkinstalldirs $(includedir) $(libdir)
++	$(srcdir)/mkinstalldirs $(DESTDIR)$(includedir) $(DESTDIR)$(libdir)
+ 
+ uninstall::
+ 	rm -f $(libdir)/libvpip.a
+--- verilog-0.8.1/ivlpp/Makefile.in.orig	2006-03-02 15:42:48.000000000 +0100
++++ verilog-0.8.1/ivlpp/Makefile.in	2006-03-02 15:43:07.000000000 +0100
+@@ -66,10 +66,10 @@
+ install: all installdirs $(libdir)/ivl/ivlpp
+ 
+ $(libdir)/ivl/ivlpp: ivlpp
+-	$(INSTALL_PROGRAM) ./ivlpp $(libdir)/ivl/ivlpp
++	$(INSTALL_PROGRAM) ./ivlpp $(DESTDIR)$(libdir)/ivl/ivlpp
+ 
+ installdirs: ../mkinstalldirs
+-	$(srcdir)/../mkinstalldirs $(libdir)/ivl
++	$(srcdir)/../mkinstalldirs $(DESTDIR)$(libdir)/ivl
+ 
+ uninstall:
+ 	rm -f $(libdir)/ivl/ivlpp
+--- verilog-0.8.1/libveriuser/Makefile.in.orig	2006-03-02 15:43:17.000000000 +0100
++++ verilog-0.8.1/libveriuser/Makefile.in	2006-03-02 15:43:40.000000000 +0100
+@@ -97,10 +97,10 @@
+ install:: all installdirs $(libdir64)/libveriuser.a $(INSTALL32)
+ 
+ $(libdir64)/libveriuser.a: ./libveriuser.a
+-	$(INSTALL_DATA) ./libveriuser.a $(libdir64)/libveriuser.a
++	$(INSTALL_DATA) ./libveriuser.a $(DESTDIR)$(libdir64)/libveriuser.a
+ 
+ installdirs: mkinstalldirs
+-	$(srcdir)/mkinstalldirs $(includedir) $(libdir64)
++	$(srcdir)/mkinstalldirs $(DESTDIR)$(includedir) $(DESTDIR)$(libdir64)
+ 
+ uninstall::
+ 	rm -f $(libdir64)/libveriuser.a
+@@ -125,7 +125,7 @@
+ install32: $(libdir)/libveriuser.a
+ 
+ $(libdir)/libveriuser.a: bin32/libveriuser.a
+-	$(INSTALL_DATA) bin32/libveriuser.a $(libdir)/libveriuser.a
++	$(INSTALL_DATA) bin32/libveriuser.a $(DESTDIR)$(libdir)/libveriuser.a
+ 
+ -include $(patsubst bin32/%.o, bin32/%.d, $(addprefix bin32/,$O))
+ endif
+--- verilog-0.8.1/tgt-pal/Makefile.in.orig	2006-03-02 15:44:56.000000000 +0100
++++ verilog-0.8.1/tgt-pal/Makefile.in	2006-03-02 15:45:11.000000000 +0100
+@@ -74,11 +74,11 @@
+ install: all installdirs $(libdir)/ivl/pal.tgt
+ 
+ $(libdir)/ivl/pal.tgt: ./pal.tgt
+-	$(INSTALL_PROGRAM) ./pal.tgt $(libdir)/ivl/pal.tgt
++	$(INSTALL_PROGRAM) ./pal.tgt $(DESTDIR)$(libdir)/ivl/pal.tgt
+ 
+ 
+ installdirs: ../mkinstalldirs
+-	$(srcdir)/../mkinstalldirs $(includedir) $(bindir) $(libdir)/ivl
++	$(srcdir)/../mkinstalldirs $(DESTDIR)$(includedir) $(DESTDIR)$(bindir) $(DESTDIR)$(libdir)/ivl
+ 
+ uninstall:
+ 	rm -f $(libdir)/ivl/pal.tgt
+--- verilog-0.8.1/tgt-vvp/Makefile.in.orig	2006-03-02 15:46:03.000000000 +0100
++++ verilog-0.8.1/tgt-vvp/Makefile.in	2006-03-02 15:46:19.000000000 +0100
+@@ -86,17 +86,17 @@
+ install: all installdirs $(libdir)/ivl/vvp.tgt $(libdir)/ivl/vvp.conf $(libdir)/ivl/vvp-s.conf
+ 
+ $(libdir)/ivl/vvp.tgt: ./vvp.tgt
+-	$(INSTALL_PROGRAM) ./vvp.tgt $(libdir)/ivl/vvp.tgt
++	$(INSTALL_PROGRAM) ./vvp.tgt $(DESTDIR)$(libdir)/ivl/vvp.tgt
+ 
+ $(libdir)/ivl/vvp.conf: vvp.conf
+-	$(INSTALL_DATA) $< $(libdir)/ivl/vvp.conf
++	$(INSTALL_DATA) $< $(DESTDIR)$(libdir)/ivl/vvp.conf
+ 
+ $(libdir)/ivl/vvp-s.conf: vvp-s.conf
+-	$(INSTALL_DATA) $< $(libdir)/ivl/vvp-s.conf
++	$(INSTALL_DATA) $< $(DESTDIR)$(libdir)/ivl/vvp-s.conf
+ 
+ 
+ installdirs: ../mkinstalldirs
+-	$(srcdir)/../mkinstalldirs $(libdir)/ivl
++	$(srcdir)/../mkinstalldirs $(DESTDIR)$(libdir)/ivl
+ 
+ uninstall:
+ 	rm -f $(libdir)/ivl/vvp.tgt
+--- verilog-0.8.1/driver/Makefile.in.orig	2006-03-02 15:41:04.000000000 +0100
++++ verilog-0.8.1/driver/Makefile.in	2006-03-02 15:42:10.000000000 +0100
+@@ -92,16 +92,16 @@
+ install: all installdirs $(bindir)/iverilog@EXEEXT@ $(INSTALL_DOC)
+ 
+ $(bindir)/iverilog@EXEEXT@: ./iverilog@EXEEXT@
+-	$(INSTALL_PROGRAM) ./iverilog@EXEEXT@ $(bindir)/iverilog@EXEEXT@
++	$(INSTALL_PROGRAM) ./iverilog@EXEEXT@ $(DESTDIR)$(bindir)/iverilog@EXEEXT@
+ 
+ $(mandir)/man1/iverilog.1: $(srcdir)/iverilog.man
+-	$(INSTALL_DATA) $(srcdir)/iverilog.man $(mandir)/man1/iverilog.1
++	$(INSTALL_DATA) $(srcdir)/iverilog.man $(DESTDIR)$(mandir)/man1/iverilog.1
+ 
+ $(prefix)/iverilog.pdf: iverilog.pdf
+-	$(INSTALL_DATA) iverilog.pdf $(prefix)/iverilog.pdf
++	$(INSTALL_DATA) iverilog.pdf $(DESTDIR)$(prefix)/iverilog.pdf
+ 
+ installdirs: ../mkinstalldirs
+-	$(srcdir)/../mkinstalldirs $(bindir) $(INSTALL_DOCDIR)
++	$(srcdir)/../mkinstalldirs $(DESTDIR)$(bindir) $(DESTDIR)$(INSTALL_DOCDIR)
+ 
+ uninstall:
+ 	rm -f $(bindir)/iverilog@EXEEXT@
+--- verilog-0.8.1/tgt-fpga/Makefile.in.orig	2006-03-02 15:43:54.000000000 +0100
++++ verilog-0.8.1/tgt-fpga/Makefile.in	2006-03-02 15:44:20.000000000 +0100
+@@ -98,23 +98,23 @@
+ install: all installdirs $(libdir)/ivl/fpga.tgt $(INSTALL_DOC) $(libdir)/ivl/fpga.conf $(libdir)/ivl/fpga-s.conf
+ 
+ $(libdir)/ivl/fpga.tgt: ./fpga.tgt
+-	$(INSTALL_PROGRAM) ./fpga.tgt $(libdir)/ivl/fpga.tgt
++	$(INSTALL_PROGRAM) ./fpga.tgt $(DESTDIR)$(libdir)/ivl/fpga.tgt
+ 
+ $(libdir)/ivl/fpga.conf: $(srcdir)/fpga.conf
+-	$(INSTALL_DATA) $(srcdir)/fpga.conf $(libdir)/ivl/fpga.conf
++	$(INSTALL_DATA) $(srcdir)/fpga.conf $(DESTDIR)$(libdir)/ivl/fpga.conf
+ 
+ $(libdir)/ivl/fpga-s.conf: $(srcdir)/fpga-s.conf
+-	$(INSTALL_DATA) $(srcdir)/fpga-s.conf $(libdir)/ivl/fpga-s.conf
++	$(INSTALL_DATA) $(srcdir)/fpga-s.conf $(DESTDIR)$(libdir)/ivl/fpga-s.conf
+ 
+ 
+ $(mandir)/man1/iverilog-fpga.1: $(srcdir)/iverilog-fpga.man
+-	$(INSTALL_DATA) $(srcdir)/iverilog-fpga.man $(mandir)/man1/iverilog-fpga.1
++	$(INSTALL_DATA) $(srcdir)/iverilog-fpga.man $(DESTDIR)$(mandir)/man1/iverilog-fpga.1
+ 
+ $(prefix)/iverilog-fpga.pdf: iverilog-fpga.pdf
+-	$(INSTALL_DATA) iverilog-fpga.pdf $(prefix)/iverilog-fpga.pdf
++	$(INSTALL_DATA) iverilog-fpga.pdf $(DESTDIR)$(prefix)/iverilog-fpga.pdf
+ 
+ installdirs: ../mkinstalldirs
+-	$(srcdir)/../mkinstalldirs $(libdir)/ivl
++	$(srcdir)/../mkinstalldirs $(DESTDIR)$(libdir)/ivl
+ 
+ uninstall:
+ 	rm -f $(libdir)/ivl/fpga.tgt
+--- verilog-0.8.1/tgt-null/Makefile.in.orig	2006-03-02 15:44:25.000000000 +0100
++++ verilog-0.8.1/tgt-null/Makefile.in	2006-03-02 15:44:49.000000000 +0100
+@@ -74,17 +74,17 @@
+ install: all installdirs $(libdir)/ivl/null.tgt $(INSTALL_DOC) $(libdir)/ivl/null.conf $(libdir)/ivl/null-s.conf
+ 
+ $(libdir)/ivl/null.tgt: ./null.tgt
+-	$(INSTALL_PROGRAM) ./null.tgt $(libdir)/ivl/null.tgt
++	$(INSTALL_PROGRAM) ./null.tgt $(DESTDIR)$(libdir)/ivl/null.tgt
+ 
+ $(libdir)/ivl/null.conf: $(srcdir)/null.conf
+-	$(INSTALL_DATA) $(srcdir)/null.conf $(libdir)/ivl/null.conf
++	$(INSTALL_DATA) $(srcdir)/null.conf $(DESTDIR)$(libdir)/ivl/null.conf
+ 
+ $(libdir)/ivl/null-s.conf: $(srcdir)/null-s.conf
+-	$(INSTALL_DATA) $(srcdir)/null-s.conf $(libdir)/ivl/null-s.conf
++	$(INSTALL_DATA) $(srcdir)/null-s.conf $(DESTDIR)$(libdir)/ivl/null-s.conf
+ 
+ 
+ installdirs: ../mkinstalldirs
+-	$(srcdir)/../mkinstalldirs $(includedir) $(bindir) $(libdir)/ivl
++	$(srcdir)/../mkinstalldirs $(DESTDIR)$(includedir) $(DESTDIR)$(bindir) $(DESTDIR)$(libdir)/ivl
+ 
+ uninstall:
+ 	rm -f $(libdir)/ivl/null.tgt
+--- verilog-0.8.1/tgt-stub/Makefile.in.orig	2006-03-02 15:45:17.000000000 +0100
++++ verilog-0.8.1/tgt-stub/Makefile.in	2006-03-02 15:45:36.000000000 +0100
+@@ -76,11 +76,11 @@
+ 	$(includedir)/vpi_user.h
+ 
+ $(libdir)/ivl/stub.tgt: ./stub.tgt
+-	$(INSTALL_PROGRAM) ./stub.tgt $(libdir)/ivl/stub.tgt
++	$(INSTALL_PROGRAM) ./stub.tgt $(DESTDIR)$(libdir)/ivl/stub.tgt
+ 
+ 
+ installdirs: ../mkinstalldirs
+-	$(srcdir)/../mkinstalldirs $(includedir) $(bindir) $(libdir)/ivl
++	$(srcdir)/../mkinstalldirs $(DESTDIR)$(includedir) $(DESTDIR)$(bindir) $(DESTDIR)$(libdir)/ivl
+ 
+ uninstall:
+ 	rm -f $(libdir)/ivl/stub.tgt
+--- verilog-0.8.1/driver-vpi/Makefile.in.orig	2006-03-02 15:42:18.000000000 +0100
++++ verilog-0.8.1/driver-vpi/Makefile.in	2006-03-02 15:42:40.000000000 +0100
+@@ -71,10 +71,10 @@
+ install: all installdirs $(bindir)/iverilog-vpi@EXEEXT@
+ 
+ $(bindir)/iverilog-vpi@EXEEXT@: ./iverilog-vpi@EXEEXT@
+-	$(INSTALL_PROGRAM) ./iverilog-vpi@EXEEXT@ $(bindir)/iverilog-vpi@EXEEXT@
++	$(INSTALL_PROGRAM) ./iverilog-vpi@EXEEXT@ $(DESTDIR)$(bindir)/iverilog-vpi@EXEEXT@
+ 
+ installdirs: ../mkinstalldirs
+-	$(srcdir)/../mkinstalldirs $(bindir)
++	$(srcdir)/../mkinstalldirs $(DESTDIR)$(bindir)
+ 
+ uninstall:
+ 	rm -f $(bindir)/iverilog-vpi@EXEEXT@
+--- verilog-0.8.1/cadpli/Makefile.in.orig	2006-03-02 16:00:16.000000000 +0100
++++ verilog-0.8.1/cadpli/Makefile.in	2006-03-02 16:00:44.000000000 +0100
+@@ -90,10 +90,10 @@
+ install: all installdirs $(vpidir)/cadpli.vpl $(INSTALL32)
+ 
+ $(vpidir)/cadpli.vpl: ./cadpli.vpl
+-	$(INSTALL_PROGRAM) ./cadpli.vpl $(vpidir)/cadpli.vpl
++	$(INSTALL_PROGRAM) ./cadpli.vpl $(DESTDIR)$(vpidir)/cadpli.vpl
+ 
+ installdirs: ../mkinstalldirs
+-	$(srcdir)/../mkinstalldirs $(vpidir)
++	$(srcdir)/../mkinstalldirs $(DESTDIR)$(vpidir)
+ 
+ uninstall: $(UNINSTALL32)
+ 	rm -f $(vpidir)/cadpli.vpl
+--- verilog-0.8.2/tgt-edif/Makefile.in.orig	2006-03-07 23:35:34.000000000 +0100
++++ verilog-0.8.2/tgt-edif/Makefile.in	2006-03-07 23:37:39.000000000 +0100
+@@ -112,7 +112,7 @@
+ install: all installdirs $(libdir)/ivl/edif.tgt $(INSTALL_DOC) $(libdir)/ivl/edif.conf $(libdir)/ivl/edif-s.conf
+ 
+ $(libdir)/ivl/edif.tgt: ./edif.tgt
+-	$(INSTALL_PROGRAM) ./edif.tgt $(libdir)/ivl/edif.tgt
++	$(INSTALL_PROGRAM) ./edif.tgt $(DESTDIR)$(libdir)/ivl/edif.tgt
+ 
+ $(libdir)/ivl/edif.conf: $(srcdir)/edif.conf
+ 	$(INSTALL_DATA) $(srcdir)/edif.conf $(libdir)/ivl/edif.conf
+@@ -122,13 +122,13 @@
+ 
+ 
+ $(mandir)/man1/iverilog-edif.1: $(srcdir)/iverilog-edif.man
+-	$(INSTALL_DATA) $(srcdir)/iverilog-edif.man $(mandir)/man1/iverilog-edif.1
++	$(INSTALL_DATA) $(srcdir)/iverilog-edif.man $(DESTDIR)$(mandir)/man1/iverilog-edif.1
+ 
+ $(prefix)/iverilog-edif.pdf: iverilog-edif.pdf
+-	$(INSTALL_DATA) iverilog-edif.pdf $(prefix)/iverilog-edif.pdf
++	$(INSTALL_DATA) iverilog-edif.pdf $(DESTDIR)$(prefix)/iverilog-edif.pdf
+ 
+ installdirs: ../mkinstalldirs
+-	$(srcdir)/../mkinstalldirs $(libdir)/ivl
++	$(srcdir)/../mkinstalldirs $(DESTDIR)$(libdir)/ivl
+ 
+ uninstall:
+ 	rm -f $(libdir)/ivl/edif.tgt
+--- verilog-0.8.2/tgt-edif/Makefile.in.orig	2006-03-07 23:43:37.000000000 +0100
++++ verilog-0.8.2/tgt-edif/Makefile.in	2006-03-07 23:43:48.000000000 +0100
+@@ -115,10 +115,10 @@
+ 	$(INSTALL_PROGRAM) ./edif.tgt $(DESTDIR)$(libdir)/ivl/edif.tgt
+ 
+ $(libdir)/ivl/edif.conf: $(srcdir)/edif.conf
+-	$(INSTALL_DATA) $(srcdir)/edif.conf $(libdir)/ivl/edif.conf
++	$(INSTALL_DATA) $(srcdir)/edif.conf $(DESTDIR)$(libdir)/ivl/edif.conf
+ 
+ $(libdir)/ivl/edif-s.conf: $(srcdir)/edif-s.conf
+-	$(INSTALL_DATA) $(srcdir)/edif-s.conf $(libdir)/ivl/edif-s.conf
++	$(INSTALL_DATA) $(srcdir)/edif-s.conf $(DESTDIR)$(libdir)/ivl/edif-s.conf
+ 
+ 
+ $(mandir)/man1/iverilog-edif.1: $(srcdir)/iverilog-edif.man
