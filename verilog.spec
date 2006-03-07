@@ -28,6 +28,9 @@ D±¿y do bycia zgodnym ze standardem IEEE-1364.
 %setup -q
 %patch0 -p1
 
+rm -f examples/.cvsignore
+mv tgt-edif/LICENSE.txt LICENSE_edif.txt
+
 %build
 %configure
 
@@ -43,10 +46,8 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-rm -f examples/.cvsignore
 install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 cp -a examples/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
-mv tgt-edif/LICENSE.txt LICENSE_edif.txt
 
 rm -rf $RPM_BUILD_ROOT%{_libdir}/*.a
 
