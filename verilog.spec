@@ -1,5 +1,5 @@
-Summary:	Icarus Verilog is Verilog compiler and simulator
-Summary(pl):	Icarus Verilog jest kompilatorem i symulatorem Veriloga
+Summary:	Icarus Verilog - Verilog compiler and simulator
+Summary(pl):	Icarus Verilog - kompilator i symulator Veriloga
 Name:		verilog
 Version:	0.8.2
 Release:	1
@@ -8,7 +8,7 @@ Group:		Applications/Engineering
 Source0:	ftp://ftp.icarus.com/pub/eda/verilog/v0.8/%{name}-%{version}.tar.gz
 # Source0-md5:	41650504e4460508a0800008a2628e07
 Patch0:		%{name}-DESTDIR.patch
-URL:		http://www.icarus.com/eda/verilog
+URL:		http://www.icarus.com/eda/verilog/
 BuildRequires:	bison
 BuildRequires:	bzip2-devel
 BuildRequires:	flex
