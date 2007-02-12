@@ -1,5 +1,5 @@
 Summary:	Icarus Verilog - Verilog compiler and simulator
-Summary(pl):	Icarus Verilog - kompilator i symulator Veriloga
+Summary(pl.UTF-8):   Icarus Verilog - kompilator i symulator Veriloga
 Name:		verilog
 Version:	0.8.2
 Release:	1
@@ -20,9 +20,9 @@ Icarus Verilog is a Verilog compiler that generates a variety of
 engineering formats, including simulation. It strives to be true
 to the IEEE-1364 standard.
 
-%description -l pl
-Icarus Verilog jest narzêdziem do syntezy i symulacji Veriloga.
-D±¿y do bycia zgodnym ze standardem IEEE-1364.
+%description -l pl.UTF-8
+Icarus Verilog jest narzÄ™dziem do syntezy i symulacji Veriloga.
+DÄ…Å¼y do bycia zgodnym ze standardem IEEE-1364.
 
 %prep
 %setup -q
