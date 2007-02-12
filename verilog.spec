@@ -1,5 +1,5 @@
 Summary:	Icarus Verilog - Verilog compiler and simulator
-Summary(pl.UTF-8):   Icarus Verilog - kompilator i symulator Veriloga
+Summary(pl.UTF-8):	Icarus Verilog - kompilator i symulator Veriloga
 Name:		verilog
 Version:	0.8.2
 Release:	1
