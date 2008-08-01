@@ -1,6 +1,6 @@
 --- verilog-0.8.1/Makefile.in.orig	2006-03-02 15:36:12.000000000 +0100
 +++ verilog-0.8.1/Makefile.in	2006-03-02 15:38:06.000000000 +0100
-@@ -216,38 +216,37 @@
+@@ -227,37 +227,37 @@
  	    do (cd $$dir ; $(MAKE) $@); done
  
  $(bindir)/iverilog-vpi: ./iverilog-vpi
@@ -9,7 +9,6 @@
  
  $(libdir)/ivl/ivl@EXEEXT@: ./ivl@EXEEXT@
 -	$(INSTALL_PROGRAM) ./ivl@EXEEXT@ $(libdir)/ivl/ivl@EXEEXT@
--	$(STRIP) $(strip_dynamic) $(libdir)/ivl/ivl@EXEEXT@
 +	$(INSTALL_PROGRAM) ./ivl@EXEEXT@ $(DESTDIR)$(libdir)/ivl/ivl@EXEEXT@
  
  $(libdir)/ivl/xnf-s.conf: $(srcdir)/xnf-s.conf
@@ -50,7 +49,7 @@
  
  # In windows installations, put a few examples and the quick_start
  # into the destination directory.
-@@ -270,8 +269,8 @@
+@@ -280,8 +280,8 @@
  endif
  
  installdirs: mkinstalldirs
@@ -325,12 +324,16 @@
  	rm -f $(libdir)/ivl/null.tgt
 --- verilog-0.8.1/tgt-stub/Makefile.in.orig	2006-03-02 15:45:17.000000000 +0100
 +++ verilog-0.8.1/tgt-stub/Makefile.in	2006-03-02 15:45:36.000000000 +0100
-@@ -76,11 +76,11 @@
+@@ -78,7 +78,7 @@
  	$(includedir)/vpi_user.h
  
  $(libdir)/ivl/stub.tgt: ./stub.tgt
 -	$(INSTALL_PROGRAM) ./stub.tgt $(libdir)/ivl/stub.tgt
 +	$(INSTALL_PROGRAM) ./stub.tgt $(DESTDIR)$(libdir)/ivl/stub.tgt
+ 
+ $(libdir)/ivl/stub.conf: stub.conf
+ 	$(INSTALL_DATA) $< $(libdir)/ivl/stub.conf
+@@ -88,7 +88,7 @@
  
  
  installdirs: ../mkinstalldirs
