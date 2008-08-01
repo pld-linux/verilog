@@ -1,12 +1,12 @@
 Summary:	Icarus Verilog - Verilog compiler and simulator
 Summary(pl.UTF-8):	Icarus Verilog - kompilator i symulator Veriloga
 Name:		verilog
-Version:	0.8.2
+Version:	0.8.6
 Release:	1
 License:	GPL (except tgt-edif with more relaxed license)
 Group:		Applications/Engineering
 Source0:	ftp://ftp.icarus.com/pub/eda/verilog/v0.8/%{name}-%{version}.tar.gz
-# Source0-md5:	41650504e4460508a0800008a2628e07
+# Source0-md5:	281c161ac42ea1342ef8d8d6b3a1907a
 Patch0:		%{name}-DESTDIR.patch
 URL:		http://www.icarus.com/eda/verilog/
 BuildRequires:	bison
@@ -32,6 +32,7 @@ rm -f examples/.cvsignore
 mv tgt-edif/LICENSE.txt LICENSE_edif.txt
 
 %build
+#find . -type f -name 'config.sub' -exec cp -f /usr/share/automake/config.sub "{}" \;
 %configure
 
 %{__make}
@@ -69,5 +70,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/ivl/cadpli.vpl
 %{_libdir}/ivl/s*
 %{_libdir}/ivl/v*.conf
+# some *.confs are missing
 %{_mandir}/man1/*
 %{_examplesdir}/%{name}-%{version}
