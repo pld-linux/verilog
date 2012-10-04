@@ -1,13 +1,12 @@
 Summary:	Icarus Verilog - Verilog compiler and simulator
 Summary(pl.UTF-8):	Icarus Verilog - kompilator i symulator Veriloga
 Name:		verilog
-Version:	0.8.6
+Version:	0.9.6
 Release:	1
 License:	GPL (except tgt-edif with more relaxed license)
 Group:		Applications/Engineering
-Source0:	ftp://ftp.icarus.com/pub/eda/verilog/v0.8/%{name}-%{version}.tar.gz
-# Source0-md5:	281c161ac42ea1342ef8d8d6b3a1907a
-Patch0:		%{name}-DESTDIR.patch
+Source0:	ftp://ftp.icarus.com/pub/eda/verilog/v0.9/%{name}-%{version}.tar.gz
+# Source0-md5:	a77d847198c571ba2bfd55b99162c3b6
 URL:		http://www.icarus.com/eda/verilog/
 BuildRequires:	bison
 BuildRequires:	bzip2-devel
@@ -26,20 +25,10 @@ Dąży do bycia zgodnym ze standardem IEEE-1364.
 
 %prep
 %setup -q
-%patch0 -p1
-
-rm -f examples/.cvsignore
-mv tgt-edif/LICENSE.txt LICENSE_edif.txt
 
 %build
-#find . -type f -name 'config.sub' -exec cp -f /usr/share/automake/config.sub "{}" \;
 %configure
-
 %{__make}
-
-#%{__make} \
-#	CFLAGS="%{rpmcflags}" \
-#	LDFLAGS="%{rpmldflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -57,19 +46,20 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc attributes.txt glossary.txt BUGS.txt QUICK_START.txt README.txt ieee1364-notes.txt lpm.txt swift.txt xilinx-hint.txt xnf.txt LICENSE_edif.txt
+%doc attributes.txt BUGS.txt developer-quick-start.txt extensions.txt
+%doc glossary.txt ieee1364-notes.txt ivl_target.txt lpm.txt netlist.txt
+%doc QUICK_START.txt README.txt swift.txt t-dll.txt va_math.txt vpi.txt
+%doc xilinx-hint.txt
 %attr(755,root,root) %{_bindir}/*
 %{_includedir}/*
 %dir %{_libdir}/ivl
 %attr(755,root,root) %{_libdir}/ivl/ivl
 %attr(755,root,root) %{_libdir}/ivl/ivlpp
-%attr(755,root,root) %{_libdir}/ivl/edif.tgt
-%attr(755,root,root) %{_libdir}/ivl/fpga.tgt
-%attr(755,root,root) %{_libdir}/ivl/null.tgt
-%attr(755,root,root) %{_libdir}/ivl/vvp.tgt
-%{_libdir}/ivl/cadpli.vpl
-%{_libdir}/ivl/s*
-%{_libdir}/ivl/v*.conf
-# some *.confs are missing
-%{_mandir}/man1/*
+%attr(755,root,root) %{_libdir}/ivl/cadpli.vpl
+%attr(755,root,root) %{_libdir}/ivl/*.tgt
+%attr(755,root,root) %{_libdir}/ivl/*.vpi
+%{_libdir}/ivl/include
+%{_libdir}/ivl/*.conf
+%{_libdir}/ivl/*.sft
+%{_mandir}/*/*
 %{_examplesdir}/%{name}-%{version}
